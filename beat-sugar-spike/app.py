@@ -147,7 +147,9 @@ if page == "Log Item":
 
     if st.session_state.logs:
         with st.expander("See Real-Time Impact & Suggestion"):
-            impact = sugar_items.get(selected_item, {}).get('impact', custom_impact or 'Custom item logged.')
+           custom_impact = ""
+           impact = sugar_items.get(selected_item, {}).get('impact', custom_impact or 'Custom item logged.')
+
             st.write(f"⚠️ **Impact:** {impact}")
             st.info(f"💡 **Next Step:** {get_recommendation(selected_item or custom_name)}")
 
@@ -169,11 +171,11 @@ elif page == "Dashboard":
 
     # Interactive Progress Bar with Reset
     progress = min(today_sugar / st.session_state.daily_budget, 1.0)
-    st.progress(
-        progress,
-        text=f"Sugar Budget: {today_sugar}/{st.session_state.daily_budget}g "
-             f"({'Safe' if progress < 0.5 else 'Watch It' if progress < 0.8 else 'Over Limit!'})"
-    )
+    st.progress(progress)
+    st.caption(f"Sugar Budget: {today_sugar}/{st.session_state.daily_budget}g "
+           f"({'Safe' if progress < 0.5 else 'Watch It' if progress < 0.8 else 'Over Limit!'})")
+
+    
     if st.button("Reset Today's Logs (for testing)"):
         st.session_state.logs = [log for log in st.session_state.logs if pd.to_datetime(log['date']).date() != datetime.now().date()]
         st.rerun()
@@ -349,3 +351,4 @@ elif page == "Settings":
 # ---------------- Footer ---------------- #
 st.markdown("---")
 st.caption("Prototype with Streamlit & Plotly. Highly interactive with editing, goals, and dynamic updates!")
+
