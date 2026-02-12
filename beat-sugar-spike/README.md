@@ -89,6 +89,7 @@ This project prioritizes:
 Working MVP over feature overload
 Behavioral design over calorie tracking
 Real-time nudges over long-term metrics
-Mngagement and retention through gamification
+Engagement and retention through gamification
+
 
 
